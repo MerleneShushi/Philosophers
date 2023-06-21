@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = 
+SRC = philo.c
 	
 
 CC = cc -g
