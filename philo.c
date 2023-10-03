@@ -3,43 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/06/21 11:28:52 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/03 12:12:19 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int ft_isdigit(int argc, char **argv)
+void	ft_bzero(void *dest, size_t n)
 {
-    int i;
-    int j;
+	unsigned char	*str;
+	size_t			a;
 
-    i = 1;
-    while (i < argc)
-    {
-        j = 0;
-        while (argv[i][j])
-        {
-            if (argv[i][j] < '0' || argv[i][j] > '9')
-                return (-1);
-            j++;
-        }
-        i++;
-    }
-    return (0);
+	a = 0;
+	str = (unsigned char *)dest;
+	while (a < n)
+	{
+		str[a] = '\0';
+		a++;
+	}
+}
+
+int ft_check_args(int argc, char **argv)
+{
+		int i;
+		int j;
+
+		i = 0;
+		while (++i < argc)
+		{
+				j = -1;
+				while (argv[i][++j])
+				{
+						if (argv[i][j] < '0' || argv[i][j] > '9')
+								return (1);
+				}
+		}
+		return (0);
 }
 
 int	main(int argc, char **argv)
 {
-    t_philo	*philo;
-
-    if (argc < 5 || argc > 6)
-        return (printf("Wrong number of arguments\n"));
-    if (ft_check_args(argc, argv) == -1)
-        return (printf("Wrong arguments\n"));
-    philo = ft_init_philo(argv);
-    return (0);
+		
+		ft_bzero(philo(), sizeof(t_philo));
+		if (argc < 5 || argc > 6)
+				return (printf("Wrong number of arguments\n"));
+		if (ft_check_args(argc, argv))
+				return (printf("Wrong arguments\n"));
+		else
+		init_philo(argv);
+		return (0);
 }

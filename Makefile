@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = philo.c
+SRC = philo.c struct.c philopthread.c\
 	
 
 CC = cc -g
@@ -13,7 +13,8 @@ BONUS = $(BNS:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): @$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(OBJ)
+			@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -pthread
 			
 clean:
 		@$(RM) $(OBJ)
