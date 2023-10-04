@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/03 12:12:19 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:41:22 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,25 @@ int ft_check_args(int argc, char **argv)
 		return (0);
 }
 
+void	init_struct(int argc, char **argv)
+{
+	ft_bzero(stru(), sizeof(t_stru));
+	stru()->nb_philo = ft_atoi(argv[1]);
+	stru()->t_die = ft_atoi(argv[2]);
+	stru()->t_eat = ft_atoi(argv[3]);
+	stru()->t_sleep = ft_atoi(argv[4]);
+	if (argc == 6)
+		stru()->nb_eat = ft_atoi(argv[5]);
+	stru()->philo = malloc(sizeof(t_philo) * stru()->nb_philo);
+}
+
 int	main(int argc, char **argv)
 {
-		
-		ft_bzero(philo(), sizeof(t_philo));
 		if (argc < 5 || argc > 6)
 				return (printf("Wrong number of arguments\n"));
 		if (ft_check_args(argc, argv))
 				return (printf("Wrong arguments\n"));
-		else
-		init_philo(argv);
+		init_struct(argc, argv);
+		init_philo();
 		return (0);
 }

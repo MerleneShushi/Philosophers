@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/03 13:06:46 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/04 15:44:15 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,35 +42,26 @@ int x = 0;
 
 void*   routine()
 {
-    int i;
-
-    i = 0;
-    while (i < 1000000)
-    {
-      x++;
-      i++;
-    }
-	return (NULL);
+    if 
 }
 
-int init_philo(char **argv)
+int init_philo(void)
 {
     int i = 0;
+    
 
-    while (i < ft_atoi(argv[1]))
+    while (++i <= stru()->nb_philo)
     {
-        if (pthread_create(&philo()->p[i], NULL, &routine, NULL))
+        if (pthread_create(&stru()->philo[i].thread, NULL, &routine, NULL))
             return (printf("ERROR CREATE PTHREAD"));
         printf("Pthread %d init\n", i);
-        i++;
     }
     i = 0;
-    while (i < ft_atoi(argv[1]))
+    while (++i <= stru()->nb_philo)
     {
-        if (pthread_join(philo()->p[i], NULL))
+        if (pthread_join(stru()->philo[i].thread, NULL))
             return (1);
         printf("Pthread %d close\n", i);
-        i++;
     }
     printf("Number of x: %d\n", x);
     return (0);
