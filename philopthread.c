@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/04 15:44:15 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:33:11 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,21 +38,35 @@ int	ft_atoi(const char *str)
 	return (0);
 }
 
-int x = 0;
-
 void*   routine()
 {
-    if 
+    while (!stru()->philo->is_die)
+		{
+			if (stru()->philo->is_eat)
+				eat();
+		}
+		return (NULL);
+}
+
+void	eat()
+{
+	pthread_mutex_lock(&stru()->mutex_fork);
+	printf("timestamp_in_ms %d has taken a fork\n", stru()->philo->n);
+	printf("timestamp_in_ms %d has taken a fork\n", stru()->philo->n);
+	printf("timestamp_in_ms %d is eat\n", stru()->philo->n);
+	sleep(10);
+	pthread_mutex_unlock(&stru()->mutex_fork);
 }
 
 int init_philo(void)
 {
     int i = 0;
     
-
+		
     while (++i <= stru()->nb_philo)
     {
-        if (pthread_create(&stru()->philo[i].thread, NULL, &routine, NULL))
+        stru()->philo[i].n = i;
+				if (pthread_create(&stru()->philo[i].thread, NULL, &routine, NULL))
             return (printf("ERROR CREATE PTHREAD"));
         printf("Pthread %d init\n", i);
     }
@@ -63,6 +77,5 @@ int init_philo(void)
             return (1);
         printf("Pthread %d close\n", i);
     }
-    printf("Number of x: %d\n", x);
     return (0);
 }

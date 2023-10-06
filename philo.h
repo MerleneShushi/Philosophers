@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/04 15:42:50 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:25:58 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ typedef struct	philo
 {
 	int	l_fork;
 	int	r_fork;
-	
+	int	is_eat;
+	int	is_sleep;
+	int	is_thinking;
+	int	*n;
 	pthread_t	thread;
+	int	is_die;
 }								t_philo;
 
 typedef struct	stru
@@ -37,6 +41,7 @@ typedef struct	stru
 	int		t_sleep;
 	int		nb_eat;
 	t_philo	*philo;
+	pthread_mutex_t	mutex_fork;
 	
 }								t_stru;
 
@@ -47,5 +52,6 @@ int ft_check_args(int argc, char **argv);
 int	ft_atoi(const char *str);
 int	init_philo();
 void*   routine();
+void	eat();
 
 #endif

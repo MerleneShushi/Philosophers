@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/04 15:41:22 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/06 15:24:51 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,20 @@ void	init_struct(int argc, char **argv)
 	if (argc == 6)
 		stru()->nb_eat = ft_atoi(argv[5]);
 	stru()->philo = malloc(sizeof(t_philo) * stru()->nb_philo);
+	stru()->philo->is_eat = 1;
 }
 
 int	main(int argc, char **argv)
 {
+		pthread_mutex_init(&stru()->mutex_fork, NULL);
+		
+		
 		if (argc < 5 || argc > 6)
 				return (printf("Wrong number of arguments\n"));
 		if (ft_check_args(argc, argv))
 				return (printf("Wrong arguments\n"));
 		init_struct(argc, argv);
 		init_philo();
+		pthread_mutex_destroy(&stru()->mutex_fork);
 		return (0);
 }
