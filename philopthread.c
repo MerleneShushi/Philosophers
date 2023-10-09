@@ -3,77 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   philopthread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/06 15:33:11 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:37:11 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *str)
+void*   routine(void *arg)
 {
-	int	a;
-	int	b;
-	int	c;
+		t_philo	*philo;
 
-	a = 0;
-	b = 0;
-	c = 1;
-	while (str[a] != '\0')
-	{
-		while ((str[a] == 32) || (str[a] > 8 && str[a] < 14))
-			a++;
-		if (str[a] == 45 || str[a] == 43)
+		philo = (t_philo *) arg;
+		while (!stru()->philo->is_die)
 		{
-			if (str[a] == 45)
-				c = -c;
-			a++;
-		}
-		while (str[a] > 47 && str[a] < 58)
-			b = b * 10 + str[a++] - 48;
-		return (b * c);
-	}
-	return (0);
-}
-
-void*   routine()
-{
-    while (!stru()->philo->is_die)
-		{
-			if (stru()->philo->is_eat)
-				eat();
+			if (!stru()->philo->is_eat)
+				eat(philo);
 		}
 		return (NULL);
 }
 
-void	eat()
+void	take_fork(t_philo	*philo)
 {
-	pthread_mutex_lock(&stru()->mutex_fork);
-	printf("timestamp_in_ms %d has taken a fork\n", stru()->philo->n);
-	printf("timestamp_in_ms %d has taken a fork\n", stru()->philo->n);
-	printf("timestamp_in_ms %d is eat\n", stru()->philo->n);
-	sleep(10);
-	pthread_mutex_unlock(&stru()->mutex_fork);
+		pthread_mutex_lock(philo->l_fork);
+		printf("Philosopher %d take fork\n", philo->n);
+		pthread_mutex_lock(philo->r_fork);
+		printf("Philosopher %d take fork\n", philo->n);
+}
+
+void	free_fork(t_philo *philo)
+{
+		pthread_mutex_unlock(philo->l_fork);
+		pthread_mutex_unlock(philo->r_fork);
+		printf("Philosopher %d is sleeping\n", philo->n);
+		sleep(stru()->t_sleep);
+		printf("Philosopher %d is thinking\n", philo->n);
+}
+
+void	eat(t_philo *philo)
+{
+	take_fork(philo);
+	pthread_mutex_lock(&stru()->lock);
+	stru()->philo->is_eat = 1;
+	printf("Philosopher %d is eating\n", philo->n);
+	usleep(stru()->t_eat);
+	stru()->philo->is_eat = 0;
+	pthread_mutex_unlock(&stru()->lock);
+	free_fork(philo);
 }
 
 int init_philo(void)
 {
-    int i = 0;
+    int i;
     
-		
+		i = 0;
     while (++i <= stru()->nb_philo)
     {
-        stru()->philo[i].n = i;
-				if (pthread_create(&stru()->philo[i].thread, NULL, &routine, NULL))
+				if (pthread_create(&stru()->thread, NULL, &routine, &stru()->philo[i]))
             return (printf("ERROR CREATE PTHREAD"));
         printf("Pthread %d init\n", i);
+				sleep(2);
     }
     i = 0;
     while (++i <= stru()->nb_philo)
     {
-        if (pthread_join(stru()->philo[i].thread, NULL))
+        if (pthread_join(stru()->thread, NULL))
             return (1);
         printf("Pthread %d close\n", i);
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/06 15:25:58 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/09 17:32:09 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,25 +23,26 @@
 
 typedef struct	philo
 {
-	int	l_fork;
-	int	r_fork;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
 	int	is_eat;
 	int	is_sleep;
 	int	is_thinking;
-	int	*n;
-	pthread_t	thread;
+	int	n;
 	int	is_die;
 }								t_philo;
 
 typedef struct	stru
 {
+	pthread_t	thread;
 	int		nb_philo;
 	int		t_die;
 	int		t_eat;
 	int		t_sleep;
 	int		nb_eat;
 	t_philo	*philo;
-	pthread_mutex_t	mutex_fork;
+	pthread_mutex_t	*fork;
+	pthread_mutex_t	lock;
 	
 }								t_stru;
 
@@ -53,5 +54,6 @@ int	ft_atoi(const char *str);
 int	init_philo();
 void*   routine();
 void	eat();
+void	ft_bzero(void *dest, size_t n);
 
 #endif

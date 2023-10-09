@@ -1,9 +1,9 @@
 NAME = philo
 
-SRC = philo.c struct.c philopthread.c\
+SRC = philo.c struct.c philopthread.c utils.c\
 	
 
-CC = cc -g
+CC = cc -g -fsanitize=thread
 RM = rm -rf
 CFLAGS = -Wall -Wextra -Werror -pthread
 AR = ar rcs
