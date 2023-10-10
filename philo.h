@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/09 17:32:09 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:52:45 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,12 @@
 
 typedef struct	philo
 {
-	pthread_mutex_t	*l_fork;
-	pthread_mutex_t	*r_fork;
+	int	n;
 	int	is_eat;
 	int	is_sleep;
-	int	is_thinking;
-	int	n;
 	int	is_die;
+	pthread_mutex_t	*l_fork;
+	pthread_mutex_t	*r_fork;
 }								t_philo;
 
 typedef struct	stru
@@ -41,19 +40,32 @@ typedef struct	stru
 	int		t_sleep;
 	int		nb_eat;
 	t_philo	*philo;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock;
 	
 }								t_stru;
 
 
+//							Estruturas Globais
+
 t_stru	*stru(void);
+t_philo *philo(void)
+
+// 							Inicialização	
 
 int ft_check_args(int argc, char **argv);
-int	ft_atoi(const char *str);
-int	init_philo();
-void*   routine();
+int	init_philo(void);
+void	init_struct(int argc, char **argv);
+
+//							Philosophers Table
+
+int init_threads(void)
+void*   routine(void *arg);
 void	eat();
+
+//							Utils
+
 void	ft_bzero(void *dest, size_t n);
+int	ft_atoi(const char *str);
 
 #endif

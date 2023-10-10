@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/09 17:30:40 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:49:50 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,26 @@ int ft_check_args(int argc, char **argv)
 		return (0);
 }
 
+void	init_philo(void)
+{
+	static int	i;
+	
+	ft_bzero(philo(), sizeof(t_philo));
+	philo()[0].n = 1;
+	philo()[0].l_fork = &stru()->forks[stru()->nb_philo - 1];
+	philo()[0].r_fork = &stru()->forks[0];
+	while (++i <= stru()->nb_philo)
+	{
+		stru()->philo[i].n = i + 1;
+		stru()->philo[i].l_fork = &stru()->forks[i - 1];
+		stru()->philo[i].r_fork = &stru()->forks[i];
+	}
+}
+
 void	init_struct(int argc, char **argv)
 {
-	int	i;
+	static int	i;
 	
-	i = 0;
 	ft_bzero(stru(), sizeof(t_stru));
 	stru()->nb_philo = ft_atoi(argv[1]);
 	stru()->t_die = ft_atoi(argv[2]);
@@ -43,21 +58,9 @@ void	init_struct(int argc, char **argv)
 	if (argc == 6)
 		stru()->nb_eat = ft_atoi(argv[5]);
 	stru()->philo = malloc(sizeof(t_philo) * stru()->nb_philo);
-	ft_bzero(stru()->philo, sizeof(t_philo));
-	stru()->fork = malloc(sizeof(pthread_mutex_t) * stru()->nb_philo);
-	pthread_mutex_init(&stru()->fork[0], NULL);
-	stru()->philo[0].n = 1;
-	stru()->philo[0].l_fork = &stru()->fork[stru()->nb_philo - 1];
-	stru()->philo[0].r_fork = &stru()->fork[0];
-	pthread_mutex_destroy(&stru()->fork[0]);
-	while (++i < stru()->nb_philo)
-	{
-		pthread_mutex_init(&stru()->fork[i], NULL);
-		stru()->philo[i].n = i + 1;
-		stru()->philo[i].l_fork = &stru()->fork[i - 1];
-		stru()->philo[i].r_fork = &stru()->fork[i];
-		pthread_mutex_destroy(&stru()->fork[i]);
-	}
+	stru()->forks = malloc(sizeof(pthread_mutex_t) * stru()->nb_philo);
+	while (i <= stru()->nb_philo)
+		pthread_mutex_init(&stru()->forks[i++], NULL);
 }
 
 int	main(int argc, char **argv)
@@ -65,11 +68,14 @@ int	main(int argc, char **argv)
 		pthread_mutex_init(&stru()->lock, NULL);
 		
 		if (argc < 5 || argc > 6)
-				return (printf("Wrong number of arguments\n"));
+			return (printf("Wrong number of arguments\n"));
 		if (ft_check_args(argc, argv))
-				return (printf("Wrong arguments\n"));
+			return (printf("Wrong arguments\n"));
+		if (argv[1] < 1)
+			return (printf("Miss Philosopher\n"));
 		init_struct(argc, argv);
 		init_philo();
+		init_threads();
 		pthread_mutex_destroy(&stru()->lock);
 		return (0);
 }

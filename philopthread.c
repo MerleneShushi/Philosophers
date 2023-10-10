@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/09 17:37:11 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/10 11:49:41 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	eat(t_philo *philo)
 	free_fork(philo);
 }
 
-int init_philo(void)
+int init_threads(void)
 {
     int i;
     
