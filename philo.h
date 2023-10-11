@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/10 11:52:45 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/11 13:50:04 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct	stru
 	int		t_eat;
 	int		t_sleep;
 	int		nb_eat;
+	unsigned long	start_time;
 	t_philo	*philo;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock;
@@ -49,17 +50,17 @@ typedef struct	stru
 //							Estruturas Globais
 
 t_stru	*stru(void);
-t_philo *philo(void)
+t_philo *philo(void);
 
 // 							Inicialização	
 
 int ft_check_args(int argc, char **argv);
-int	init_philo(void);
+void	init_philo(void);
 void	init_struct(int argc, char **argv);
 
 //							Philosophers Table
 
-int init_threads(void)
+int init_threads(void);
 void*   routine(void *arg);
 void	eat();
 

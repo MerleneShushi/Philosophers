@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/10 11:49:50 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/11 11:24:20 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 			return (printf("Wrong number of arguments\n"));
 		if (ft_check_args(argc, argv))
 			return (printf("Wrong arguments\n"));
-		if (argv[1] < 1)
+		if (atoi(argv[1]) < 1)
 			return (printf("Miss Philosopher\n"));
 		init_struct(argc, argv);
 		init_philo();
