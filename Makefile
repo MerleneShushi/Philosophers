@@ -1,6 +1,6 @@
 NAME = philo
 
-SRC = philo.c struct.c philopthread.c utils.c\
+SRC = philo.c struct.c philopthread.c utils.c actions.c\
 	
 
 CC = cc -g -fsanitize=thread

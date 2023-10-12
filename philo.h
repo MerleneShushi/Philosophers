@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/11 13:50:04 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/12 12:59:05 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,16 @@ typedef struct	philo
 {
 	int	n;
 	int	is_eat;
-	int	is_sleep;
+	int	t_philo_die;
 	int	is_die;
+	pthread_mutex_t	lock;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
 }								t_philo;
 
 typedef struct	stru
 {
-	pthread_t	thread;
+	
 	int		nb_philo;
 	int		t_die;
 	int		t_eat;
@@ -41,8 +42,10 @@ typedef struct	stru
 	int		nb_eat;
 	unsigned long	start_time;
 	t_philo	*philo;
+	pthread_t	*thread;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	lock;
+	pthread_mutex_t	message;
 	
 }								t_stru;
 
@@ -58,11 +61,18 @@ int ft_check_args(int argc, char **argv);
 void	init_philo(void);
 void	init_struct(int argc, char **argv);
 
-//							Philosophers Table
+//							Threads
 
 int init_threads(void);
+unsigned long	get_time(void);
+
+//							Philosophers Table
+
 void*   routine(void *arg);
 void	eat();
+void	take_fork(t_philo	*philo);
+void	free_fork(t_philo *philo);
+void	menssage(char *str, int n);
 
 //							Utils
 
