@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/12 12:59:56 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/14 15:24:34 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	init_struct(int argc, char **argv)
 	stru()->t_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		stru()->nb_eat = ft_atoi(argv[5]);
+	stru()->died = 0;
 	stru()->philo = malloc(sizeof(t_philo) * stru()->nb_philo);
 	stru()->thread = malloc(sizeof(pthread_t) * stru()->nb_philo);
 	stru()->forks = malloc(sizeof(pthread_mutex_t) * stru()->nb_philo);
