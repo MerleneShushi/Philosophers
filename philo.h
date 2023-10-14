@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/12 12:59:05 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:29:46 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ void	menssage(char *str, int n);
 
 void	ft_bzero(void *dest, size_t n);
 int	ft_atoi(const char *str);
+int	ft_usleep(unsigned long time);
 
 #endif

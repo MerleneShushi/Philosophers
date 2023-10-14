@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/12 15:41:51 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:30:54 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int init_threads(void)
     {
 			if (pthread_create(&stru()->thread[i], NULL, &routine, &philo()[i]))
         return (printf("ERROR CREATE PTHREAD"));
-			usleep(1);
+			ft_usleep(1);
     }
     i = -1;
     while (++i <= stru()->nb_philo)

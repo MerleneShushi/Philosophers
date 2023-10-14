@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/12 15:42:00 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:32:21 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,20 @@ void	eat(t_philo *philo)
 	take_fork(philo);
 	pthread_mutex_lock(&philo->lock);
 	pthread_mutex_lock(&stru()->lock);
+	if (get_time() > (unsigned long)philo->t_philo_die)
+	{
+		menssage("died", philo->n);
+		pthread_mutex_unlock(&stru()->lock);
+		pthread_mutex_unlock(&philo->lock);
+		return ;
+	}
 	stru()->philo->is_eat = 1;
+	pthread_mutex_unlock(&stru()->lock);
+	pthread_mutex_lock(&stru()->lock);
+	philo->t_philo_die = get_time() + stru()->t_die;
 	pthread_mutex_unlock(&stru()->lock);
 	menssage("is eating", philo->n);
 	usleep(stru()->t_eat * 1000);
-	pthread_mutex_lock(&stru()->lock);
-	stru()->philo->t_philo_die += stru()->t_eat;
-	pthread_mutex_unlock(&stru()->lock);
 	pthread_mutex_lock(&stru()->lock);
 	stru()->philo->is_eat = 0;
 	pthread_mutex_unlock(&stru()->lock);
