@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 12:00:58 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:38:37 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,8 @@ void	init_philo(void)
 	pthread_mutex_init(&philo()[0].lock, NULL);
 	philo()[0].r_fork = &stru()->forks[stru()->nb_philo - 1];
 	philo()[0].l_fork = &stru()->forks[0];
-	while (++i <= stru()->nb_philo)
+	while (++i < stru()->nb_philo)
 	{
-		
 		philo()[i].n = i + 1;
 		philo()[i].is_eat = 0;
 		philo()[i].t_philo_die = stru()->t_die;
@@ -85,6 +84,8 @@ int	main(int argc, char **argv)
 			return (printf("Wrong arguments\n"));
 		if (atoi(argv[1]) < 1)
 			return (printf("Miss Philosopher\n"));
+		if (atoi(argv[2]) < 1 || atoi(argv[3]) < 1 || atoi(argv[4]) < 1)
+			return (printf("Wrong Time\n"));
 		init_struct(argc, argv);
 		init_philo();
 		init_threads();
@@ -95,5 +96,8 @@ int	main(int argc, char **argv)
 		}
 		pthread_mutex_destroy(&stru()->message);
 		pthread_mutex_destroy(&stru()->lock);
+		free(stru()->thread);
+		free(stru()->philo);
+		free(stru()->forks);
 		return (0);
 }

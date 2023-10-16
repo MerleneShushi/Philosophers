@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 12:11:41 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:41:03 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ void menssage(char *str, t_philo *philo)
 		{
 			printf("%lu %d %s\n", time, philo->n, str);
 			stru()->died = 1;
+			if (stru()->nb_philo == 1)
+				pthread_mutex_unlock(philo->l_fork);
 		}
 		else if (!stru()->died)
     	printf("%lu %d %s\n", time, philo->n, str);
@@ -59,7 +61,7 @@ int	eat(t_philo *philo)
 	philo->is_eat = 1;
 	pthread_mutex_unlock(&stru()->lock);
 	pthread_mutex_lock(&stru()->lock);
-	philo->t_philo_die += (get_time() - stru()->start_time) + stru()->t_die;
+	philo->t_philo_die = (get_time() - stru()->start_time) + stru()->t_die;
 	pthread_mutex_unlock(&stru()->lock);
 	menssage("is eating", philo);
 	usleep(stru()->t_eat * 1000);

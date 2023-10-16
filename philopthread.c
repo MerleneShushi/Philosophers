@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 12:13:50 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/16 16:35:35 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*control_routine(void *arg)
 		time = philo->t_philo_die;
 		if (((get_time() - stru()->start_time) > time) && !philo->is_eat)
 		{
-			printf("%lu\n", time);
+			//printf("%lu\n", time);
 			menssage("died", philo);
 			break ;
 		}
@@ -49,6 +49,8 @@ void*	routine(void *arg)
 		philo = (t_philo *)arg;
 		if (pthread_create(&philo->control, NULL, &control_routine, (void *)philo))
 			return ((void *)1);
+		// if (philo->n % 2 == 0)
+		// 	usleep(2000);
 		while (1)
 		{
 			if (eat(philo))
@@ -73,8 +75,7 @@ int init_threads(void)
 		ft_usleep(1);
 	}
 	i = -1;
-	while (++i <= stru()->nb_philo)
-		if (pthread_join(stru()->thread[i], NULL))
-			return (1);
+	while (++i < stru()->nb_philo)
+		pthread_join(stru()->thread[i], NULL);
 	return (0);
 }
