@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:30:07 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/13 17:31:23 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/15 15:33:47 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,21 @@ int	ft_usleep(unsigned long time)
 	start = get_time();
 	while ((get_time() - start) < time)
 		usleep(time / 10);
+	return (0);
+}
+
+int	ft_strcmp(char *str1, char *str2)
+{
+	int	i;
+
+	i = 0;
+	while (str1[i])
+	{
+		if (str1[i] != str2[i])
+			return (1);
+		i++;
+	}
+	if (str2[i] != '\0')
+		return (1);
 	return (0);
 }

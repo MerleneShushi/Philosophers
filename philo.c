@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/14 15:24:34 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:00:58 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	init_struct(int argc, char **argv)
 	
 	i = -1;
 	stru()->nb_philo = ft_atoi(argv[1]);
-	stru()->t_die = ft_atoi(argv[2]);
-	stru()->t_eat = ft_atoi(argv[3]);
-	stru()->t_sleep = ft_atoi(argv[4]);
+	stru()->t_die = (unsigned long)ft_atoi(argv[2]);
+	stru()->t_eat = (unsigned long)ft_atoi(argv[3]);
+	stru()->t_sleep = (unsigned long)ft_atoi(argv[4]);
 	if (argc == 6)
 		stru()->nb_eat = ft_atoi(argv[5]);
 	stru()->died = 0;

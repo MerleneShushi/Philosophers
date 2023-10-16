@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/14 17:08:49 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:13:50 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,49 @@ unsigned long	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void*	control_routine
+void	*control_routine(void *arg)
+{
+	t_philo	*philo;
+	unsigned long	time;
+
+	philo = (t_philo *)arg;
+	while (1)
+	{
+		pthread_mutex_lock(&philo->lock);
+		time = philo->t_philo_die;
+		if (((get_time() - stru()->start_time) > time) && !philo->is_eat)
+		{
+			printf("%lu\n", time);
+			menssage("died", philo);
+			break ;
+		}
+		pthread_mutex_unlock(&philo->lock);
+	}
+	pthread_mutex_unlock(&philo->lock);
+	return (0);
+}
 
 void*	routine(void *arg)
 {
 		t_philo	*philo;
-
-		philo = (t_philo *) arg;
-		while (!stru()->died)
+		
+		philo = (t_philo *)arg;
+		if (pthread_create(&philo->control, NULL, &control_routine, (void *)philo))
+			return ((void *)1);
+		while (1)
 		{
-			if (!eat(philo))
-				menssage("is thinking", philo->n);
-			else
+			if (eat(philo))
 				break ;
+			menssage("is thinking", philo);
 		}
+		if (pthread_join(philo->control, NULL))
+			return ((void *)1);
 		return (NULL);
 }
 
 int init_threads(void)
 {
 	int i;
-	pthread_t	control;
 
 	i = -1;
 	stru()->start_time = get_time();
@@ -50,14 +72,9 @@ int init_threads(void)
 			return (printf("ERROR CREATE PTHREAD"));
 		ft_usleep(1);
 	}
-	if (i > 1)
-		if (pthread_create(&control, NULL, &control_routine, NULL))
-			return (printf("ERROR CREATE PTHREAD"));
 	i = -1;
 	while (++i <= stru()->nb_philo)
 		if (pthread_join(stru()->thread[i], NULL))
 			return (1);
-	if (i > 1)
-		pthread_join(control, NULL);
 	return (0);
 }

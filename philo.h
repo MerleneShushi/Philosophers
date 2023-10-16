@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/14 15:28:52 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/16 12:01:03 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ typedef struct	philo
 {
 	int	n;
 	int	is_eat;
-	int	t_philo_die;
+	unsigned long	t_philo_die;
 	int	is_die;
+	pthread_t control;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*l_fork;
 	pthread_mutex_t	*r_fork;
@@ -36,9 +37,9 @@ typedef struct	stru
 {
 	
 	int		nb_philo;
-	int		t_die;
-	int		t_eat;
-	int		t_sleep;
+	unsigned long		t_die;
+	unsigned long		t_eat;
+	unsigned long		t_sleep;
 	int		nb_eat;
 	int		died;
 	unsigned long	start_time;
@@ -70,15 +71,17 @@ unsigned long	get_time(void);
 //							Philosophers Table
 
 void*   routine(void *arg);
+void	*control_routine();
 int	eat();
 void	take_fork(t_philo	*philo);
 void	free_fork(t_philo *philo);
-void	menssage(char *str, int n);
+void	menssage(char *str, t_philo	*philo);
 
 //							Utils
 
 void	ft_bzero(void *dest, size_t n);
 int	ft_atoi(const char *str);
 int	ft_usleep(unsigned long time);
+int	ft_strcmp(char *str1, char *str2);
 
 #endif
