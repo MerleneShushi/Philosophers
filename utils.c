@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/09 17:30:07 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 18:37:51 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 22:36:14 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,6 @@ int	ft_atoi(const char *str)
 	}
 	return (0);
 }
-
-// int	ft_usleep(unsigned long time)
-// {
-// 	unsigned long	start;
-
-// 	start = get_time();
-// 	while ((get_time() - start) < time)
-// 		usleep(time / 10);
-// 	return (0);
-// }
 
 int	ft_strcmp(char *str1, char *str2)
 {

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.c                                           :+:      :+:    :+:   */
+/*   mutex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 11:08:28 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 23:11:38 by dcarrilh         ###   ########.fr       */
+/*   Created: 2023/10/17 22:13:52 by dcarrilh          #+#    #+#             */
+/*   Updated: 2023/10/17 22:44:13 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-t_stru	*stru(void)
+void	redmutex(int i, t_philo *philo)
 {
-	static t_stru	stru;
-
-	return (&stru);
-}
-
-t_philo	*philo(void)
-{
-	static t_philo	philo;
-
-	return (&philo);
+	if (i == 1)
+	{
+		pthread_mutex_lock(&philo->lock);
+		pthread_mutex_lock(&stru()->lock);
+	}
+	else
+	{
+		pthread_mutex_unlock(&stru()->lock);
+		pthread_mutex_unlock(&philo->lock);
+	}
 }
