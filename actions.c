@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 16:41:03 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:48:31 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void menssage(char *str, t_philo *philo)
 		{
 			printf("%lu %d %s\n", time, philo->n, str);
 			stru()->died = 1;
-			if (stru()->nb_philo == 1)
-				pthread_mutex_unlock(philo->l_fork);
 		}
 		else if (!stru()->died)
     	printf("%lu %d %s\n", time, philo->n, str);
@@ -49,7 +47,7 @@ void	free_fork(t_philo *philo)
 int	eat(t_philo *philo)
 {
 	pthread_mutex_lock(&stru()->message);
-	if (stru()->died)
+	if (stru()->died || stru()->philo_eat_count == stru()->nb_philo)
 	{
 		pthread_mutex_unlock(&stru()->message);
 		return (1);
@@ -59,6 +57,9 @@ int	eat(t_philo *philo)
 	pthread_mutex_lock(&philo->lock);
 	pthread_mutex_lock(&stru()->lock);
 	philo->is_eat = 1;
+	philo->eat_count++;
+	if (philo->eat_count == stru()->nb_eat)
+		stru()->philo_eat_count++;
 	pthread_mutex_unlock(&stru()->lock);
 	pthread_mutex_lock(&stru()->lock);
 	philo->t_philo_die = (get_time() - stru()->start_time) + stru()->t_die;

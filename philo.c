@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 16:38:37 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:59:47 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	init_philo(void)
 	philo()[0].is_eat = 0;
 	philo()[0].t_philo_die = stru()->t_die;
 	philo()[0].is_die = 0;
+	philo()[0].eat_count = 0;
 	pthread_mutex_init(&philo()[0].lock, NULL);
 	philo()[0].r_fork = &stru()->forks[stru()->nb_philo - 1];
 	philo()[0].l_fork = &stru()->forks[0];
@@ -47,6 +48,7 @@ void	init_philo(void)
 		philo()[i].is_eat = 0;
 		philo()[i].t_philo_die = stru()->t_die;
 		philo()[i].is_die = 0;
+		philo()[i].eat_count = 0;
 		pthread_mutex_init(&philo()[i].lock, NULL);
 		philo()[i].l_fork = &stru()->forks[i - 1];
 		philo()[i].r_fork = &stru()->forks[i];
@@ -64,6 +66,7 @@ void	init_struct(int argc, char **argv)
 	stru()->t_sleep = (unsigned long)ft_atoi(argv[4]);
 	if (argc == 6)
 		stru()->nb_eat = ft_atoi(argv[5]);
+	stru()->philo_eat_count = 0;
 	stru()->died = 0;
 	stru()->philo = malloc(sizeof(t_philo) * stru()->nb_philo);
 	stru()->thread = malloc(sizeof(pthread_t) * stru()->nb_philo);

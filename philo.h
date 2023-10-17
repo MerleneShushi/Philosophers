@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 12:01:03 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 10:58:16 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	philo
 	int	is_eat;
 	unsigned long	t_philo_die;
 	int	is_die;
+	int	eat_count;
 	pthread_t control;
 	pthread_mutex_t	lock;
 	pthread_mutex_t	*l_fork;
@@ -41,6 +42,7 @@ typedef struct	stru
 	unsigned long		t_eat;
 	unsigned long		t_sleep;
 	int		nb_eat;
+	int		philo_eat_count;
 	int		died;
 	unsigned long	start_time;
 	t_philo	*philo;

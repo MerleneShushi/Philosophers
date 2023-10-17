@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philopthread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/16 16:35:35 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:49:25 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ void	*control_routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->lock);
+		// if (stru()->philo_eat_count == stru()->nb_philo)
+		// 		break ;
+		pthread_mutex_unlock(&philo->lock);
+		pthread_mutex_lock(&philo->lock);
 		time = philo->t_philo_die;
 		if (((get_time() - stru()->start_time) > time) && !philo->is_eat)
 		{
-			//printf("%lu\n", time);
 			menssage("died", philo);
 			break ;
 		}
@@ -47,12 +50,19 @@ void*	routine(void *arg)
 		t_philo	*philo;
 		
 		philo = (t_philo *)arg;
+		if (stru()->nb_philo == 1)
+		{
+			menssage("has taken a fork", philo);
+			usleep(stru()->t_die * 1000);
+			menssage("dead", philo);
+			return (NULL);
+		}
 		if (pthread_create(&philo->control, NULL, &control_routine, (void *)philo))
 			return ((void *)1);
-		// if (philo->n % 2 == 0)
-		// 	usleep(2000);
 		while (1)
 		{
+			if (stru()->philo_eat_count == stru()->nb_philo)
+				break ;
 			if (eat(philo))
 				break ;
 			menssage("is thinking", philo);
