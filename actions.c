@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 11:48:31 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:44:01 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	free_fork(t_philo *philo)
 {
 		pthread_mutex_unlock(philo->l_fork);
 		pthread_mutex_unlock(philo->r_fork);
-		menssage("is sleeping", philo);
-		usleep(stru()->t_sleep * 1000);
 }
 
 int	eat(t_philo *philo)
@@ -58,6 +56,8 @@ int	eat(t_philo *philo)
 	pthread_mutex_lock(&stru()->lock);
 	philo->is_eat = 1;
 	philo->eat_count++;
+	pthread_mutex_unlock(&stru()->lock);
+	pthread_mutex_lock(&stru()->lock);
 	if (philo->eat_count == stru()->nb_eat)
 		stru()->philo_eat_count++;
 	pthread_mutex_unlock(&stru()->lock);
@@ -71,5 +71,38 @@ int	eat(t_philo *philo)
 	pthread_mutex_unlock(&stru()->lock);
 	pthread_mutex_unlock(&philo->lock);
 	free_fork(philo);
+	return (0);
+}
+
+int	slepping(t_philo *philo)
+{
+	pthread_mutex_lock(&stru()->lock);
+	pthread_mutex_lock(&stru()->message);
+	if (stru()->died || stru()->philo_eat_count == stru()->nb_philo)
+	{
+		pthread_mutex_unlock(&stru()->message);
+		pthread_mutex_unlock(&stru()->lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&stru()->message);
+	pthread_mutex_unlock(&stru()->lock);
+	menssage("is sleeping", philo);
+	usleep(stru()->t_sleep * 1000);
+	return (0);
+}
+
+int	thinking(t_philo *philo)
+{
+	pthread_mutex_lock(&stru()->lock);
+	pthread_mutex_lock(&stru()->message);
+	if (stru()->died || stru()->philo_eat_count == stru()->nb_philo)
+	{
+		pthread_mutex_unlock(&stru()->message);
+		pthread_mutex_unlock(&stru()->lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&stru()->message);
+	pthread_mutex_unlock(&stru()->lock);
+	menssage("is thinking", philo);
 	return (0);
 }

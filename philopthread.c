@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 11:49:25 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 19:40:55 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,13 @@ void	*control_routine(void *arg)
 	while (1)
 	{
 		pthread_mutex_lock(&philo->lock);
-		// if (stru()->philo_eat_count == stru()->nb_philo)
-		// 		break ;
+		pthread_mutex_lock(&stru()->lock);
+		if (stru()->philo_eat_count == stru()->nb_philo)
+		{
+			pthread_mutex_unlock(&stru()->lock);
+			break ;
+		}
+		pthread_mutex_unlock(&stru()->lock);
 		pthread_mutex_unlock(&philo->lock);
 		pthread_mutex_lock(&philo->lock);
 		time = philo->t_philo_die;
@@ -61,11 +66,12 @@ void*	routine(void *arg)
 			return ((void *)1);
 		while (1)
 		{
-			if (stru()->philo_eat_count == stru()->nb_philo)
-				break ;
 			if (eat(philo))
 				break ;
-			menssage("is thinking", philo);
+			if (slepping(philo))
+				break ;
+			if (thinking(philo))
+				break ;
 		}
 		if (pthread_join(philo->control, NULL))
 			return ((void *)1);
@@ -82,7 +88,7 @@ int init_threads(void)
 	{
 		if (pthread_create(&stru()->thread[i], NULL, &routine, &philo()[i]))
 			return (printf("ERROR CREATE PTHREAD"));
-		ft_usleep(1);
+		usleep(1);
 	}
 	i = -1;
 	while (++i < stru()->nb_philo)

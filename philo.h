@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 10:58:16 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/17 18:53:38 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ unsigned long	get_time(void);
 void*   routine(void *arg);
 void	*control_routine();
 int	eat();
+int	slepping(t_philo *philo);
+int	thinking(t_philo *philo);
 void	take_fork(t_philo	*philo);
 void	free_fork(t_philo *philo);
 void	menssage(char *str, t_philo	*philo);
@@ -83,7 +85,7 @@ void	menssage(char *str, t_philo	*philo);
 
 void	ft_bzero(void *dest, size_t n);
 int	ft_atoi(const char *str);
-int	ft_usleep(unsigned long time);
+//int	ft_usleep(unsigned long time);
 int	ft_strcmp(char *str1, char *str2);
 
 #endif
