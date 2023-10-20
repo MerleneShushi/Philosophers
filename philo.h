@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 23:07:27 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/20 15:55:29 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct philo
 	unsigned long				t_philo_die;
 	int							is_die;
 	int							eat_count;
-	pthread_t					control;
 	pthread_mutex_t				lock;
 	pthread_mutex_t				*l_fork;
 	pthread_mutex_t				*r_fork;
@@ -45,6 +44,7 @@ typedef struct stru
 	int							died;
 	unsigned long				start_time;
 	t_philo						*philo;
+	pthread_t					*control;
 	pthread_t					*thread;
 	pthread_mutex_t				*forks;
 	pthread_mutex_t				lock;
@@ -70,7 +70,7 @@ unsigned long			get_time(void);
 //							Philosophers Table
 
 void					*routine(void *arg);
-void					*control_routine(void *arg);
+void					*control_routine(void);
 int						eat(t_philo *philo);
 int						slepping(t_philo *philo);
 int						thinking(t_philo *philo);
