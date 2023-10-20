@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/20 17:38:20 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:34:31 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,13 @@ void	take_fork(t_philo	*philo)
 
 int	eat(t_philo *philo)
 {
-	pthread_mutex_lock(&stru()->lock);
-	pthread_mutex_lock(&stru()->message);
+	redmutex(2, philo->n - 1);
 	if (stru()->died || stru()->philo_eat_count == stru()->nb_philo)
 	{
 		pthread_mutex_unlock(&stru()->message);
 		return (1);
 	}
-	pthread_mutex_unlock(&stru()->message);
-	pthread_mutex_unlock(&stru()->lock);
+	redmutex(3, philo->n - 1);
 	take_fork(philo);
 	redmutex(1, philo->n - 1);
 	philo->is_eat = 1;

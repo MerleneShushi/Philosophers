@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/20 17:44:52 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:42:04 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_check_args(int argc, char **argv)
 void	init_philo(void)
 {
 	int	i;
-	
+
 	i = -1;
 	while (++i < stru()->nb_philo)
 	{
