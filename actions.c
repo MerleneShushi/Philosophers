@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/17 22:42:40 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:38:20 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	take_fork(t_philo	*philo)
 
 int	eat(t_philo *philo)
 {
+	pthread_mutex_lock(&stru()->lock);
 	pthread_mutex_lock(&stru()->message);
 	if (stru()->died || stru()->philo_eat_count == stru()->nb_philo)
 	{
@@ -45,8 +46,9 @@ int	eat(t_philo *philo)
 		return (1);
 	}
 	pthread_mutex_unlock(&stru()->message);
+	pthread_mutex_unlock(&stru()->lock);
 	take_fork(philo);
-	redmutex(1, philo);
+	redmutex(1, philo->n - 1);
 	philo->is_eat = 1;
 	philo->eat_count++;
 	pthread_mutex_unlock(&stru()->lock);
@@ -61,7 +63,7 @@ int	eat(t_philo *philo)
 	usleep(stru()->t_eat * 1000);
 	pthread_mutex_lock(&stru()->lock);
 	philo->is_eat = 0;
-	redmutex(0, philo);
+	redmutex(0, philo->n - 1);
 	return (0);
 }
 

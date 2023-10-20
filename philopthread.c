@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/20 15:58:27 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:25:34 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,33 @@ unsigned long	get_time(void)
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void	*control_routine(void)
+void	*control_routine(void *arg)
 {
+	(void)arg;
 	int	i;
 	unsigned long	time;
 
 	i = 0;
 	while (i < stru()->nb_philo)
 	{
-		redmutex(1, philo);
+		redmutex(1, i);
 		if (stru()->philo_eat_count == stru()->nb_philo)
 		{
 			pthread_mutex_unlock(&stru()->lock);
 			break ;
 		}
-		redmutex(0, philo);
+		redmutex(0, i);
 		pthread_mutex_lock(&philo()[i].lock);
 		time = philo()[i].t_philo_die;
 		if (((get_time() - stru()->start_time) > time) && !philo()[i].is_eat)
 		{
-			menssage("died", philo);
+			menssage("died", &philo()[i]);
 			break ;
 		}
 		pthread_mutex_unlock(&philo()[i].lock);
 		i++;
+		if(i == stru()->nb_philo)
+			i = 0;
 	}
 	pthread_mutex_unlock(&philo()[i].lock);
 	return (0);
@@ -87,7 +90,7 @@ int	init_threads(void)
 	}
 	if (i > 0)
 		if (pthread_create(&stru()->control, NULL, &control_routine, NULL))
-			return ((void *)1);
+			return (1);
 	i = -1;
 	while (++i < stru()->nb_philo)
 		pthread_join(stru()->thread[i], NULL);

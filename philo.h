@@ -6,7 +6,7 @@
 /*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:32:21 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/20 15:55:29 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:55:57 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct stru
 	int							died;
 	unsigned long				start_time;
 	t_philo						*philo;
-	pthread_t					*control;
+	pthread_t					control;
 	pthread_t					*thread;
 	pthread_mutex_t				*forks;
 	pthread_mutex_t				lock;
@@ -70,14 +70,14 @@ unsigned long			get_time(void);
 //							Philosophers Table
 
 void					*routine(void *arg);
-void					*control_routine(void);
+void					*control_routine(void *arg);
 int						eat(t_philo *philo);
 int						slepping(t_philo *philo);
 int						thinking(t_philo *philo);
 void					take_fork(t_philo	*philo);
 void					free_fork(t_philo *philo);
 void					menssage(char *str, t_philo	*philo);
-void					redmutex(int i, t_philo *philo);
+void					redmutex(int i, int p);
 
 //							Utils
 
