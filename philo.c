@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 11:28:50 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/20 18:42:04 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/21 12:06:12 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	init_philo(void)
 		philo()[i].eat_count = 0;
 		pthread_mutex_init(&philo()[i].lock, NULL);
 		philo()[i].l_fork = &stru()->forks[i];
-		philo()[i].r_fork = &stru()->forks[i + 1];
+		philo()[i].r_fork = &stru()->forks[(i + 1) % stru()->nb_philo];
 	}
 }
 

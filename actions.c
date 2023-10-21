@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/20 18:34:31 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/21 13:12:57 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,20 @@ void	menssage(char *str, t_philo *philo)
 
 void	take_fork(t_philo	*philo)
 {
-	pthread_mutex_lock(philo->l_fork);
-	menssage("has taken a fork", philo);
-	pthread_mutex_lock(philo->r_fork);
-	menssage("has taken a fork", philo);
+	if (philo->n % 2)
+	{
+		pthread_mutex_lock(philo->l_fork);
+		menssage("has taken a fork", philo);
+		pthread_mutex_lock(philo->r_fork);
+		menssage("has taken a fork", philo);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->r_fork);
+		menssage("has taken a fork", philo);
+		pthread_mutex_lock(philo->l_fork);
+		menssage("has taken a fork", philo);
+	}
 }
 
 int	eat(t_philo *philo)
