@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 13:59:09 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/21 21:59:30 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:12:22 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,10 @@ int	slepping(t_philo *philo)
 
 int	thinking(t_philo *philo)
 {
+	if (((long)(philo->stru->t_die - philo->stru->t_sleep
+			- philo->stru->t_eat) / 2) > 0)
+		usleep((philo->stru->t_die - philo->stru->t_sleep
+				- philo->stru->t_eat) / 2 * 1000);
 	pthread_mutex_lock(&philo->stru->lock);
 	pthread_mutex_lock(&philo->stru->message);
 	if (philo->stru->died

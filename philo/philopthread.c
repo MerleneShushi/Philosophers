@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philopthread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dcarrilh <dcarrilh@student.42porto.com>    +#+  +:+       +#+        */
+/*   By: dcarrilh <dcarrilh@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 12:00:59 by dcarrilh          #+#    #+#             */
-/*   Updated: 2023/10/21 22:08:09 by dcarrilh         ###   ########.fr       */
+/*   Updated: 2023/10/22 17:12:54 by dcarrilh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	*routine(void *arg)
 	{
 		menssage("has taken a fork", philo);
 		usleep(philo->stru->t_die * 1000);
-		menssage("dead", philo);
 		return (NULL);
 	}
 	while (1)
